@@ -1,5 +1,6 @@
 <template lang="pug">
-router-view
+main
+	router-view
 </template>
 
 <script setup>
@@ -27,4 +28,10 @@ router-view
 </script>
 
 <style scoped>
+main {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	margin: 0;
+}
 </style>

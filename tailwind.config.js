@@ -5,10 +5,9 @@ export default {
         './index.html',
         './src/**/*.{vue,js,ts,jsx,tsx}',
     ],
-    darkMode: 'class',
     theme: {
         fontFamily: {
-            sans: ["'Segoe UI'", "'Roboto'", "'Helvetica Neue'", 'Arial', 'sans-serif'],
+            sans: ['Roboto', 'Segoe UI', 'Helvetica Neue', 'Arial', 'sans-serif'],
             serif: ["'Georgia'", "'Times New Roman'", 'serif'],
             mono: ["'Menlo'", "'Monaco'", "'Courier New'", 'monospace'],
         },
