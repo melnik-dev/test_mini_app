@@ -16,14 +16,16 @@ const router = createRouter({
             path: '/dashboard',
             name: 'dashboard',
             meta: {
-                auth: true,
+                // auth: true,
             },
             component: () => import('@/components/dashboard/ShoDashboardIndex.vue'),
-            redirect: function () {
-                const store = useAuth()
-                return store.getUserRole === 0 ? { name: 'settings' } : { name: 'profile' }
-            },
-            children: []
+            children: [
+                {
+                    path: 'list',
+                    name: 'dashboardList',
+                    component: () => import('@/components/dashboard/ShoDashboardList.vue'),
+                },
+            ]
         },
         {
             path: '/404',

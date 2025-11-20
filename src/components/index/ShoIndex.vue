@@ -1,25 +1,22 @@
 <template lang="pug">
-.flex.flex-1.items-center.justify-center.p-4.h-full
+.flex.flex-1.items-center.justify-center.p-4
 	// Карточка
-	// Фон оставляем, чтобы карточка выделялась на фоне body
 	.max-w-md.w-full.p-8.rounded-2xl.shadow-xl.text-center.bg-white(class="dark:bg-slate-900")
 
-		// Иконка (цвета специфичные, оставляем)
+		// Иконка
 		.mb-6
 			.w-20.h-20.rounded-full.bg-blue-900.flex.items-center.justify-center.mx-auto(class="dark:bg-blue-700")
 				i.pi.pi-key.text-blue-50.text-4xl(class="dark:text-white")
 
 		// Заголовок
-		// УДАЛИЛИ цвета текста. Теперь они наследуются от body (Slate-900 / White)
 		h1.text-2xl.font-bold.mb-4 Необходима авторизация
 
 		// Текст
-		// ОСТАВИЛИ цвета. Это "вторичный" текст, он должен быть серым, а не черным/белым
 		p.text-slate-600.mb-6(class="dark:text-slate-300")
 			| Для доступа к этому сервису необходимо авторизоваться через Telegram Mini App.
 			| Пожалуйста, откройте это приложение через Telegram для продолжения.
 
-		// Инфоблок (цвета специфичные, оставляем)
+		// Инфоблок
 		.rounded-lg.p-4.mb-6.bg-blue-50.text-blue-700(class="dark:bg-blue-900/30 dark:text-blue-300")
 			.flex.items-center.justify-center.space-x-2
 				i.pi.pi-info-circle.text-lg
