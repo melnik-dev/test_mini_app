@@ -23,6 +23,8 @@ button(
 	import { useRouter } from "vue-router";
 	import { useAuth } from "@/config/stores/auth.js";
 	import { Moon, Sun } from 'lucide-vue-next';
+	import Toast from 'primevue/toast';
+	import ConfirmDialog from 'primevue/confirmdialog';
 
 	const storeAuth = useAuth();
 	const router = useRouter();
