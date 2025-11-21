@@ -19,131 +19,131 @@ button(
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { useRouter } from "vue-router";
-import { useAuth } from "@/config/stores/auth.js";
-import { Moon, Sun } from 'lucide-vue-next';
+	import { ref, onMounted } from 'vue';
+	import { useRouter } from "vue-router";
+	import { useAuth } from "@/config/stores/auth.js";
+	import { Moon, Sun } from 'lucide-vue-next';
 
-const storeAuth = useAuth();
-const router = useRouter();
-const isDark = ref(false);
+	const storeAuth = useAuth();
+	const router = useRouter();
+	const isDark = ref(false);
 
-// Инициализация темы (работает и в TG, и в браузере)
-const initTheme = () => {
-	const tg = window.Telegram?.WebApp;
-	const isTgAvailable = tg && tg.initData; // Проверка, что мы реально в Телеграме
+	// Инициализация темы (работает и в TG, и в браузере)
+	const initTheme = () => {
+		const tg = window.Telegram?.WebApp;
+		const isTgAvailable = tg && tg.initData; // Проверка, что мы реально в Телеграме
 
-	// 1. Определяем параметры темы
-	let themeParams = {};
-	let colorScheme = 'light';
+		// 1. Определяем параметры темы
+		let themeParams = {};
+		let colorScheme = 'light';
 
-	if (isTgAvailable) {
-		// Если в Telegram - берем его цвета
-		themeParams = tg.themeParams;
-		colorScheme = tg.colorScheme;
-	} else {
-		// Если в браузере - берем локальные настройки или дефолт
-		const savedTheme = localStorage.getItem('theme');
-		const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-		if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
-			colorScheme = 'dark';
-			// Эмуляция цветов темной темы Telegram для браузера
-			themeParams = {
-				bg_color: '#17212b',
-				secondary_bg_color: '#232e3c',
-				text_color: '#f5f5f5',
-				hint_color: '#6c7883',
-				link_color: '#62bcf9',
-				button_color: '#3390ec',
-				button_text_color: '#ffffff',
-			};
+		if (isTgAvailable) {
+			// Если в Telegram - берем его цвета
+			themeParams = tg.themeParams;
+			colorScheme = tg.colorScheme;
 		} else {
-			// Эмуляция цветов светлой темы
-			themeParams = {
-				bg_color: '#ffffff',
-				secondary_bg_color: '#f1f1f1',
-				text_color: '#000000',
-				hint_color: '#999999',
-				link_color: '#2481cc',
-				button_color: '#3390ec',
-				button_text_color: '#ffffff',
-			};
-		}
-	}
+			// Если в браузере - берем локальные настройки или дефолт
+			const savedTheme = localStorage.getItem('theme');
+			const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-	// 2. Применяем CSS переменные
-	const root = document.documentElement;
-	const colors = {
-		'--tg-theme-bg-color': themeParams.bg_color || '#ffffff',
-		'--tg-theme-secondary-bg-color': themeParams.secondary_bg_color || '#f1f1f1',
-		'--tg-theme-text-color': themeParams.text_color || '#000000',
-		'--tg-theme-hint-color': themeParams.hint_color || '#999999',
-		'--tg-theme-link-color': themeParams.link_color || '#2481cc',
-		'--tg-theme-button-color': themeParams.button_color || '#3390ec',
-		'--tg-theme-button-text-color': themeParams.button_text_color || '#ffffff',
+			if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
+				colorScheme = 'dark';
+				// Эмуляция цветов темной темы Telegram для браузера
+				themeParams = {
+					bg_color: '#17212b',
+					secondary_bg_color: '#232e3c',
+					text_color: '#f5f5f5',
+					hint_color: '#6c7883',
+					link_color: '#62bcf9',
+					button_color: '#3390ec',
+					button_text_color: '#ffffff',
+				};
+			} else {
+				// Эмуляция цветов светлой темы
+				themeParams = {
+					bg_color: '#ffffff',
+					secondary_bg_color: '#f1f1f1',
+					text_color: '#000000',
+					hint_color: '#999999',
+					link_color: '#2481cc',
+					button_color: '#3390ec',
+					button_text_color: '#ffffff',
+				};
+			}
+		}
+
+		// 2. Применяем CSS переменные
+		const root = document.documentElement;
+		const colors = {
+			'--tg-theme-bg-color': themeParams.bg_color || '#ffffff',
+			'--tg-theme-secondary-bg-color': themeParams.secondary_bg_color || '#f1f1f1',
+			'--tg-theme-text-color': themeParams.text_color || '#000000',
+			'--tg-theme-hint-color': themeParams.hint_color || '#999999',
+			'--tg-theme-link-color': themeParams.link_color || '#2481cc',
+			'--tg-theme-button-color': themeParams.button_color || '#3390ec',
+			'--tg-theme-button-text-color': themeParams.button_text_color || '#ffffff',
+		};
+
+		Object.entries(colors).forEach(([key, value]) => {
+			root.style.setProperty(key, value);
+		});
+
+		// 3. Переключаем класс .dark для Tailwind
+		if (colorScheme === 'dark') {
+			root.classList.add('dark');
+			isDark.value = true;
+		} else {
+			root.classList.remove('dark');
+			isDark.value = false;
+		}
+
+		// Настройка UI Телеграма (цвет хедера)
+		if (isTgAvailable) {
+			tg.setHeaderColor(themeParams.secondary_bg_color || '#f1f1f1');
+			tg.setBackgroundColor(themeParams.bg_color || '#ffffff');
+		}
 	};
 
-	Object.entries(colors).forEach(([key, value]) => {
-		root.style.setProperty(key, value);
+	// Ручное переключение (для тестов в браузере)
+	const toggleTheme = () => {
+		const newTheme = isDark.value ? 'light' : 'dark';
+		localStorage.setItem('theme', newTheme);
+
+		// Если мы в реальном TG, мы не должны менять тему вручную через localStorage,
+		// но для разработки это удобно.
+		// Перезапускаем initTheme, чтобы применились новые "фейковые" цвета
+		// (так как window.Telegram.WebApp.themeParams мы подменяем логикой выше)
+
+		// Небольшой хак для перезапуска логики
+		if (!window.Telegram?.WebApp?.initData) {
+			window.location.reload(); // Простейший способ обновить цвета в "эмуляторе"
+		} else {
+			// В реальном TG просто тоглим класс (цвета не поменяются, т.к. они от TG зависят)
+			document.documentElement.classList.toggle('dark');
+			isDark.value = !isDark.value;
+		}
+	};
+
+	onMounted(() => {
+		// Инициализация
+		window.Telegram?.WebApp?.ready();
+		window.Telegram?.WebApp?.expand();
+
+		initTheme();
+
+		// Слушатель изменений темы из самого Telegram
+		window.Telegram?.WebApp?.onEvent('themeChanged', initTheme);
 	});
-
-	// 3. Переключаем класс .dark для Tailwind
-	if (colorScheme === 'dark') {
-		root.classList.add('dark');
-		isDark.value = true;
-	} else {
-		root.classList.remove('dark');
-		isDark.value = false;
-	}
-
-	// Настройка UI Телеграма (цвет хедера)
-	if (isTgAvailable) {
-		tg.setHeaderColor(themeParams.secondary_bg_color || '#f1f1f1');
-		tg.setBackgroundColor(themeParams.bg_color || '#ffffff');
-	}
-};
-
-// Ручное переключение (для тестов в браузере)
-const toggleTheme = () => {
-	const newTheme = isDark.value ? 'light' : 'dark';
-	localStorage.setItem('theme', newTheme);
-
-	// Если мы в реальном TG, мы не должны менять тему вручную через localStorage,
-	// но для разработки это удобно.
-	// Перезапускаем initTheme, чтобы применились новые "фейковые" цвета
-	// (так как window.Telegram.WebApp.themeParams мы подменяем логикой выше)
-
-	// Небольшой хак для перезапуска логики
-	if (!window.Telegram?.WebApp?.initData) {
-		window.location.reload(); // Простейший способ обновить цвета в "эмуляторе"
-	} else {
-		// В реальном TG просто тоглим класс (цвета не поменяются, т.к. они от TG зависят)
-		document.documentElement.classList.toggle('dark');
-		isDark.value = !isDark.value;
-	}
-};
-
-onMounted(() => {
-	// Инициализация
-	window.Telegram?.WebApp?.ready();
-	window.Telegram?.WebApp?.expand();
-
-	initTheme();
-
-	// Слушатель изменений темы из самого Telegram
-	window.Telegram?.WebApp?.onEvent('themeChanged', initTheme);
-});
-// router.beforeEach(async (to, from, next) => {
-// 	const token = localStorage.getItem('userToken')
-// 	if(token) {
-// 		// await storeAuth.setAuth(token)
-// 	}
-// 	if (to.meta.auth) {
-// 		if (!storeAuth.getToken) return next('/')
-// 		const withRole = to.matched.find(r => r.meta.role)
-// 		if (withRole && !withRole.meta.role.includes(storeAuth.getUserRole)) return next('/dashboard')
-// 	}
-// 	next()
-// })
+	// router.beforeEach(async (to, from, next) => {
+	// 	const token = localStorage.getItem('userToken')
+	// 	if(token) {
+	// 		// await storeAuth.setAuth(token)
+	// 	}
+	// 	if (to.meta.auth) {
+	// 		if (!storeAuth.getToken) return next('/')
+	// 		const withRole = to.matched.find(r => r.meta.role)
+	// 		if (withRole && !withRole.meta.role.includes(storeAuth.getUserRole)) return next('/dashboard')
+	// 	}
+	// 	next()
+	// })
 </script>

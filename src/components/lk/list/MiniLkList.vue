@@ -54,108 +54,107 @@
 					)
 </template>
 <script setup>
-import { ref, computed } from 'vue';
-import { useConfirm } from "primevue/useconfirm";
-import { useToast } from "primevue/usetoast";
-import { Button } from 'primevue';
-import MiniLkListItem from '@/components/lk/list/MiniLkListItem.vue';
-import MiniTabButton from '@/components/ui/MiniTabButton.vue'
-import MiniUiNotfoundList from "@/components/ui/MiniUiNotfoundList.vue";
-// Services
-const confirm = useConfirm();
-const toast = useToast();
-// State
-const currentTab = ref('all'); // 'all' | 'group'
-const tabList = [{value: 'all', name: 'Все товары'},{value: 'group', name: 'Группы товаров'}]
-const selectedItems = ref(new Set());
-// Mock Data
-const products = ref([
-	{
-		id: 1,
-		title: 'iPhone 15 Pro Max',
-		articleNumber: '123456789',
-		initialPrice: 1199.99,
-		currentPrice: 1099.99,
-		imageUrl: '',
-		lastChanged: new Date('2025-11-15'),
-		priceChange: 'decrease'
-	},
-	{
-		id: 2,
-		title: 'MacBook Air M3',
-		articleNumber: '987654321',
-		initialPrice: 1299.99,
-		currentPrice: 1399.99,
-		imageUrl: 'https://placehold.co/60x40',
-		lastChanged: new Date('2025-11-14'),
-		priceChange: 'increase'
-	},
-	{
-		id: 3,
-		title: 'AirPods Pro 2nd Gen',
-		articleNumber: '456789123',
-		initialPrice: 249.99,
-		currentPrice: 199.99,
-		imageUrl: 'https://placehold.co/60x40',
-		lastChanged: new Date('2025-11-13'),
-		priceChange: 'decrease'
-	}
-]);
-
-// Computed
-const filteredProducts = computed(() => {
-	if (currentTab.value === 'group') {
-		const weekAgo = new Date();
-		weekAgo.setDate(weekAgo.getDate() - 7);
-		return products.value.filter(p => new Date(p.lastChanged) >= weekAgo);
-	}
-	return products.value;
-});
-
-// Logic
-const $_mini_lk_list_toggleSelection = (productId) => {
-	const newSet = new Set(selectedItems.value);
-	if (newSet.has(productId)) {
-		newSet.delete(productId);
-	} else {
-		newSet.add(productId);
-	}
-	selectedItems.value = newSet;
-};
-
-// Универсальная функция удаления
-const $_mini_lk_list_confirmDelete = (type = 'single', targetId = null) => {
-	const count = type === 'group' ? selectedItems.value.size : 1;
-
-	confirm.require({
-		message: type === 'single'
-			? 'Вы уверены, что хотите навсегда удалить этот товар?'
-			: `Вы уверены, что хотите удалить ${count} выбранных товаров?`,
-		header: 'Подтверждение',
-		icon: 'pi pi-exclamation-triangle',
-		rejectProps: {
-			label: 'Отмена',
-			severity: 'secondary',
-			outlined: true
+	import { ref, computed } from 'vue';
+	import { useConfirm } from "primevue/useconfirm";
+	import { useToast } from "primevue/usetoast";
+	import { Button } from 'primevue';
+	import MiniLkListItem from '@/components/lk/list/MiniLkListItem.vue';
+	import MiniTabButton from '@/components/ui/MiniTabButton.vue'
+	import MiniUiNotfoundList from "@/components/ui/MiniUiNotfoundList.vue";
+	// Services
+	const confirm = useConfirm();
+	const toast = useToast();
+	// State
+	const currentTab = ref('all'); // 'all' | 'group'
+	const tabList = [{value: 'all', name: 'Все товары'},{value: 'group', name: 'Группы товаров'}]
+	const selectedItems = ref(new Set());
+	// Mock Data
+	const products = ref([
+		{
+			id: 1,
+			title: 'iPhone 15 Pro Max',
+			articleNumber: '123456789',
+			initialPrice: 1199.99,
+			currentPrice: 1099.99,
+			imageUrl: '',
+			lastChanged: new Date('2025-11-15'),
+			priceChange: 'decrease'
 		},
-		acceptProps: {
-			label: 'Удалить',
-			severity: 'danger'
+		{
+			id: 2,
+			title: 'MacBook Air M3',
+			articleNumber: '987654321',
+			initialPrice: 1299.99,
+			currentPrice: 1399.99,
+			imageUrl: 'https://placehold.co/60x40',
+			lastChanged: new Date('2025-11-14'),
+			priceChange: 'increase'
 		},
-		accept: () => {
-			if (type === 'single' && targetId) {
-				products.value = products.value.filter(p => p.id !== targetId);
-				selectedItems.value.delete(targetId); // Убираем из выделения если был
-				toast.add({ severity: 'success', summary: 'Удалено', detail: 'Товар удален', life: 3000 });
-			} else if (type === 'group') {
-				products.value = products.value.filter(p => !selectedItems.value.has(p.id));
-				selectedItems.value.clear();
-				toast.add({ severity: 'success', summary: 'Удалено', detail: `${count} товаров удалено`, life: 3000 });
-			}
+		{
+			id: 3,
+			title: 'AirPods Pro 2nd Gen',
+			articleNumber: '456789123',
+			initialPrice: 249.99,
+			currentPrice: 199.99,
+			imageUrl: 'https://placehold.co/60x40',
+			lastChanged: new Date('2025-11-13'),
+			priceChange: 'decrease'
 		}
-	});
-};
+	]);
 
+	// Computed
+	const filteredProducts = computed(() => {
+		if (currentTab.value === 'group') {
+			const weekAgo = new Date();
+			weekAgo.setDate(weekAgo.getDate() - 7);
+			return products.value.filter(p => new Date(p.lastChanged) >= weekAgo);
+		}
+		return products.value;
+	});
+
+	// Logic
+	const $_mini_lk_list_toggleSelection = (productId) => {
+		const newSet = new Set(selectedItems.value);
+		if (newSet.has(productId)) {
+			newSet.delete(productId);
+		} else {
+			newSet.add(productId);
+		}
+		selectedItems.value = newSet;
+	};
+
+	// Универсальная функция удаления
+	const $_mini_lk_list_confirmDelete = (type = 'single', targetId = null) => {
+		const count = type === 'group' ? selectedItems.value.size : 1;
+
+		confirm.require({
+			message: type === 'single'
+				? 'Вы уверены, что хотите навсегда удалить этот товар?'
+				: `Вы уверены, что хотите удалить ${count} выбранных товаров?`,
+			header: 'Подтверждение',
+			icon: 'pi pi-exclamation-triangle',
+			rejectProps: {
+				label: 'Отмена',
+				severity: 'secondary',
+				outlined: true
+			},
+			acceptProps: {
+				label: 'Удалить',
+				severity: 'danger'
+			},
+			accept: () => {
+				if (type === 'single' && targetId) {
+					products.value = products.value.filter(p => p.id !== targetId);
+					selectedItems.value.delete(targetId); // Убираем из выделения если был
+					toast.add({ severity: 'success', summary: 'Удалено', detail: 'Товар удален', life: 3000 });
+				} else if (type === 'group') {
+					products.value = products.value.filter(p => !selectedItems.value.has(p.id));
+					selectedItems.value.clear();
+					toast.add({ severity: 'success', summary: 'Удалено', detail: `${count} товаров удалено`, life: 3000 });
+				}
+			}
+		});
+	};
 </script>
 
 <style scoped>
