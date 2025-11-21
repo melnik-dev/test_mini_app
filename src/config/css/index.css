@@ -1,14 +1,53 @@
-@import '@fontsource/roboto/300.css';
-@import '@fontsource/roboto/400.css';
-@import '@fontsource/roboto/500.css';
-@import '@fontsource/roboto/700.css';
-
 @import "tailwindcss";
+
+/* Если используете tailwindcss-animate плагин, раскомментируйте следующую строку */
+/* @plugin "tailwindcss-animate"; */
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+:root {
+    /*
+      Инициализация переменных с фоллбэками.
+      Значения по умолчанию (#ffffff и т.д.) нужны для случая,
+      если JS скрипт в App.vue еще не отработал или сломался.
+    */
+    --tg-theme-bg-color: #ffffff;
+    --tg-theme-secondary-bg-color: #f1f1f1;
+    --tg-theme-text-color: #000000;
+    --tg-theme-hint-color: #999999;
+    --tg-theme-link-color: #2481cc;
+    --tg-theme-button-color: #3390ec;
+    --tg-theme-button-text-color: #ffffff;
+
+    /* PrimeVue Specific Overrides if needed globally */
+    /* Например, глобальный радиус скругления, если хотите как в TG */
+    --p-content-border-radius: 0.75rem;
+}
+
+/* Глобальные стили */
 body {
-    font-family: theme('fontFamily.sans');
+    /* Используем переменные темы */
+    background-color: var(--tg-theme-bg-color);
+    color: var(--tg-theme-text-color);
+
+    /* Настройки шрифта */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
     -webkit-font-smoothing: antialiased;
-    @apply bg-white text-slate-900 dark:bg-slate-950 dark:text-white;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Стилизация скроллбара для браузера (опционально, для красоты при отладке) */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--tg-theme-secondary-bg-color);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--tg-theme-hint-color);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--tg-theme-link-color);
 }

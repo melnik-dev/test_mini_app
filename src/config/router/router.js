@@ -7,30 +7,31 @@ const router = createRouter({
         {
             path: '/',
             name: 'index',
-            component: () => import('@/components/index/ShoIndex.vue'),
+            component: () => import('@/components/index/MiniIndex.vue'),
             meta: {
                 auth: false
             },
         },
         {
-            path: '/dashboard',
-            name: 'dashboard',
+            path: '/lk',
+            redirect: '/lk/list',
+            name: 'lk',
             meta: {
                 // auth: true,
             },
-            component: () => import('@/components/dashboard/ShoDashboardIndex.vue'),
+            component: () => import('@/components/lk/MiniLkIndex.vue'),
             children: [
                 {
                     path: 'list',
-                    name: 'dashboardList',
-                    component: () => import('@/components/dashboard/ShoDashboardList.vue'),
+                    name: 'lkList',
+                    component: () => import('@/components/lk/list/MiniLkList.vue'),
                 },
             ]
         },
         {
             path: '/404',
             name: '404',
-            component: () => import('@/components/404/ShoErrorIndex.vue'),
+            component: () => import('@/components/404/MiniErrorIndex.vue'),
         },
         {
             path: '/:pathMatch(.*)*',

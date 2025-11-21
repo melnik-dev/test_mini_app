@@ -1,115 +1,105 @@
-import { definePreset } from '@primeuix/themes'
-import Aura from '@primeuix/themes/aura'
+import { definePreset } from '@primeuix/themes';
+import Aura from '@primeuix/themes/aura';
 
 const Tgm = definePreset(Aura, {
     common: {
         fontFamily: {
-            sans: "'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif",
-            serif: "'Georgia', 'Times New Roman', serif",
-            mono: "'Menlo', 'Monaco', 'Courier New', monospace",
-        },
-        borderRadius: {
-            none: '0',
-            xs: '0.25rem',
-            sm: '0.375rem',
-            md: '0.5rem',
-            lg: '0.75rem',
-            xl: '1rem',
+            // Используем системные шрифты для максимальной нативности (San Francisco на iOS, Roboto на Android)
+            sans: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
         },
     },
     semantic: {
         primary: {
-            50: '#e3f2fd',
-            100: '#bbdefb',
-            200: '#90caf9',
-            300: '#64b5f6',
-            400: '#42a5f5',
-            500: '#3390ec',
-            600: '#2b7cd3',
-            700: '#2368b9',
-            800: '#1b549f',
-            900: '#13407a',
-            950: '#0d2f5c',
+            // Так как мы используем CSS переменные, мы не можем генерировать палитру (50-950).
+            // Мы мапим основной оттенок (500) на цвет кнопки Telegram.
+            // Остальные оттенки можно оставить дефолтными или замапить на тот же цвет, если они мешают.
+            50: 'var(--tg-theme-button-color, #3390ec)',
+            100: 'var(--tg-theme-button-color, #3390ec)',
+            200: 'var(--tg-theme-button-color, #3390ec)',
+            300: 'var(--tg-theme-button-color, #3390ec)',
+            400: 'var(--tg-theme-button-color, #3390ec)',
+            500: 'var(--tg-theme-button-color, #3390ec)',
+            600: 'var(--tg-theme-button-color, #3390ec)',
+            700: 'var(--tg-theme-button-color, #3390ec)',
+            800: 'var(--tg-theme-button-color, #3390ec)',
+            900: 'var(--tg-theme-button-color, #3390ec)',
+            950: 'var(--tg-theme-button-color, #3390ec)',
         },
         colorScheme: {
             light: {
                 primary: {
-                    color: '#3390ec',
-                    contrastColor: '#ffffff',
-                    hoverColor: '#2b7cd3',
-                    activeColor: '#2368b9',
+                    // Основной цвет кнопок, чекбоксов и акцентов
+                    color: 'var(--tg-theme-button-color, #3390ec)',
+                    // Цвет текста на кнопках (обычно белый)
+                    contrastColor: 'var(--tg-theme-button-text-color, #ffffff)',
+                    // Telegram обычно не меняет цвет при наведении на тач-устройствах, оставляем тот же
+                    hoverColor: 'var(--tg-theme-button-color, #3390ec)',
+                    activeColor: 'var(--tg-theme-button-color, #3390ec)',
                 },
                 surface: {
-                    0: '#ffffff',
-                    50: '#fafafa',
-                    100: '#f4f4f5',
-                    200: '#e5e7eb',
-                    300: '#d1d5db',
-                    400: '#9ca3af',
-                    500: '#6b7280',
-                    600: '#4b5563',
-                    700: '#374151',
-                    800: '#1f2937',
-                    900: '#111827',
-                    950: '#030712',
+                    // 0 - это основной фон контента (карточек, инпутов)
+                    0: 'var(--tg-theme-bg-color, #ffffff)',
+                    // 50-100 - вторичный фон (обычно фон самой страницы в iOS стиле)
+                    50: 'var(--tg-theme-secondary-bg-color, #f1f1f1)',
+                    100: 'var(--tg-theme-secondary-bg-color, #f1f1f1)',
+                    // 200 - используется для границ (borders)
+                    200: 'var(--tg-theme-hint-color, #dfe1e5)',
+                    // Остальные оттенки серых можно оставить от Aura или тоже замапить
+                    300: 'var(--tg-theme-hint-color, #dfe1e5)',
+                    400: 'var(--tg-theme-hint-color, #999999)',
+                    500: 'var(--tg-theme-hint-color, #999999)',
+                    600: 'var(--tg-theme-hint-color, #999999)',
+                    700: 'var(--tg-theme-text-color, #000000)',
+                    800: 'var(--tg-theme-text-color, #000000)',
+                    900: 'var(--tg-theme-text-color, #000000)',
+                    950: 'var(--tg-theme-text-color, #000000)',
                 },
-                semantic: {
-                    highlight: {
-                        background: '#3390ec',
-                        focusBackground: '#2b7cd3',
-                        color: '#ffffff',
-                        focusColor: '#ffffff',
-                    },
-                },
+                text: {
+                    // Основной текст
+                    color: 'var(--tg-theme-text-color, #000000)',
+                    // Вторичный текст (плейсхолдеры, подписи)
+                    mutedColor: 'var(--tg-theme-hint-color, #999999)',
+                    // При наведении текст остается тем же
+                    hoverColor: 'var(--tg-theme-text-color, #000000)',
+                }
             },
             dark: {
                 primary: {
-                    color: '#64b5f6',
-                    contrastColor: '#0d2f5c',
-                    hoverColor: '#90caf9',
-                    activeColor: '#bbdefb',
+                    color: 'var(--tg-theme-button-color, #3390ec)',
+                    contrastColor: 'var(--tg-theme-button-text-color, #ffffff)',
+                    hoverColor: 'var(--tg-theme-button-color, #3390ec)',
+                    activeColor: 'var(--tg-theme-button-color, #3390ec)',
                 },
                 surface: {
-                    0: '#0a0a0f',
-                    50: '#16161f',
-                    100: '#1e1e2e',
-                    200: '#2a2a3a',
-                    300: '#363647',
-                    400: '#4a4a5e',
-                    500: '#707089',
-                    600: '#9090a8',
-                    700: '#b0b0c3',
-                    800: '#d0d0dd',
-                    900: '#e8e8f0',
-                    950: '#f5f5f8',
+                    // В темной теме TG, bg-color - это почти черный
+                    0: 'var(--tg-theme-bg-color, #17212b)',
+                    50: 'var(--tg-theme-secondary-bg-color, #232e3c)',
+                    100: 'var(--tg-theme-secondary-bg-color, #232e3c)',
+                    // Границы в темной теме должны быть едва заметны
+                    200: 'rgba(255, 255, 255, 0.1)', // Hack: полупрозрачный белый для границ
+                    300: 'rgba(255, 255, 255, 0.1)',
+                    400: 'var(--tg-theme-hint-color, #6c7883)',
+                    500: 'var(--tg-theme-hint-color, #6c7883)',
+                    600: 'var(--tg-theme-hint-color, #6c7883)',
+                    700: 'var(--tg-theme-text-color, #f5f5f5)',
+                    800: 'var(--tg-theme-text-color, #f5f5f5)',
+                    900: 'var(--tg-theme-text-color, #f5f5f5)',
+                    950: 'var(--tg-theme-text-color, #f5f5f5)',
                 },
-                semantic: {
-                    highlight: {
-                        background: '#64b5f6',
-                        focusBackground: '#90caf9',
-                        color: '#0d2f5c',
-                        focusColor: '#0d2f5c',
-                    },
-                },
-            },
-        },
+                text: {
+                    color: 'var(--tg-theme-text-color, #ffffff)',
+                    mutedColor: 'var(--tg-theme-hint-color, #6c7883)',
+                    hoverColor: 'var(--tg-theme-text-color, #ffffff)',
+                }
+            }
+        }
     },
     components: {
-        button: {
-            borderRadius: '10px',
-            paddingX: '1.25rem',
-            paddingY: '0.75rem',
-        },
-        card: {
-            borderRadius: '16px',
-            shadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
-        },
-        inputtext: {
-            borderRadius: '10px',
-            paddingX: '1rem',
-            paddingY: '0.75rem',
-        },
-    },
-})
+        // Пример глобального переопределения для кнопок, если нужно убрать скругления
+        // button: {
+        //     borderRadius: '8px' // Или 'var(--tg-theme-button-radius)' если бы такое было
+        // }
+    }
+});
 
-export default Tgm
+export default Tgm;
