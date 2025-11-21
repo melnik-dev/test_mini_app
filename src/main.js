@@ -23,7 +23,7 @@ app
             preset: Tgm,
             options: {
                 prefix: 'p',
-                darkModeSelector: '.dark',
+                darkModeSelector: 'html.dark',
                 cssLayer: {
                     name: 'primevue',
                     order: 'base, primevue',

@@ -116,12 +116,14 @@ button(
 		// Перезапускаем initTheme, чтобы применились новые "фейковые" цвета
 		// (так как window.Telegram.WebApp.themeParams мы подменяем логикой выше)
 
-		// Небольшой хак для перезапуска логики
+		// Если не в TG - перезапускаем initTheme для обновления цветов
 		if (!window.Telegram?.WebApp?.initData) {
-			window.location.reload(); // Простейший способ обновить цвета в "эмуляторе"
+			initTheme(); // Обновляем тему без перезагрузки страницы
 		} else {
 			// В реальном TG просто тоглим класс (цвета не поменяются, т.к. они от TG зависят)
-			document.documentElement.classList.toggle('dark');
+			// Но все равно нужно обновить классы на обоих элементах для PrimeVue
+			const root = document.documentElement;
+			root.classList.toggle('dark');
 			isDark.value = !isDark.value;
 		}
 	};

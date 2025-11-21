@@ -24,7 +24,7 @@
 				@delete="$_mini_lk_list_confirmDelete('single', product.id)"
 			)
 
-		//- Пустое состояние (Empty State)
+		//- Пустое состояние
 		MiniUiNotfoundList(v-if="filteredProducts.length === 0" text="Список отслеживания пуст. Добавьте первый товар!")
 			//- Кнопка добавления для пустого экрана
 			Button.mt-6(label="Добавить товар" icon="pi pi-plus" rounded @click="$emit('add')")
