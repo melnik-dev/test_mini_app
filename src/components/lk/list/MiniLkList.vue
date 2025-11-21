@@ -113,7 +113,7 @@
 	});
 
 	// Logic
-	const $_mini_lk_list_toggleSelection = (productId) => {
+	function $_mini_lk_list_toggleSelection(productId) {
 		const newSet = new Set(selectedItems.value);
 		if (newSet.has(productId)) {
 			newSet.delete(productId);
@@ -121,10 +121,10 @@
 			newSet.add(productId);
 		}
 		selectedItems.value = newSet;
-	};
+	}
 
 	// Универсальная функция удаления
-	const $_mini_lk_list_confirmDelete = (type = 'single', targetId = null) => {
+	function $_mini_lk_list_confirmDelete(type = 'single', targetId = null) {
 		const count = type === 'group' ? selectedItems.value.size : 1;
 
 		confirm.require({
@@ -133,15 +133,8 @@
 				: `Вы уверены, что хотите удалить ${count} выбранных товаров?`,
 			header: 'Подтверждение',
 			icon: 'pi pi-exclamation-triangle',
-			rejectProps: {
-				label: 'Отмена',
-				severity: 'secondary',
-				outlined: true
-			},
-			acceptProps: {
-				label: 'Удалить',
-				severity: 'danger'
-			},
+			rejectProps: {label: 'Отмена',severity: 'secondary',outlined: true},
+			acceptProps: {label: 'Удалить',severity: 'danger'},
 			accept: () => {
 				if (type === 'single' && targetId) {
 					products.value = products.value.filter(p => p.id !== targetId);
@@ -154,7 +147,7 @@
 				}
 			}
 		});
-	};
+	}
 </script>
 
 <style scoped>

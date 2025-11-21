@@ -98,7 +98,7 @@ div(
 	// Функция для открытия ссылки
 	function $_mini_lk_listItem_openProductLink() {
 		console.log('Opening product link:', props.product.title);
-	};
+	}
 
 	const copyArticleNumber = (articleNumber) => {
 		navigator.clipboard.writeText(articleNumber)
