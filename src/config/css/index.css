@@ -72,6 +72,9 @@ html.dark .p-toast-message-content .p-toast-detail {
 html.dark .p-toast-message-success .p-toast-message-icon {
     color: #22c55e !important; /* Ярко-зеленая иконка */
 }
+html.dark .p-toast-message-error .p-toast-message-icon {
+    color: #ef4444 !important; /* Ярко-зеленая иконка */
+}
 .p-toast {
     max-width: 90vw !important;
 }
