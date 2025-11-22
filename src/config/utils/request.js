@@ -2,16 +2,13 @@ import axios from "axios";
 import {useRouter} from "vue-router";
 import {useAuth} from "@/config/stores/auth.js";
 
-const public_server = import.meta.env.VITE_PUBLIC_URL_API // публичный
-const inner_server = import.meta.env.VITE_INNER_URL_API // внутренний
+const server = import.meta.env.VITE_URL_API
 
 export function useRequest() {
     const storeAuth = useAuth()
     const router = useRouter()
 
-    return async (method, path, publ = false, formData, type = 'json') => {
-        const server = publ ? public_server : inner_server
-
+    return async (method, path, formData, type = 'json') => {
         try {
             const {data} = await axios({
                 method,
