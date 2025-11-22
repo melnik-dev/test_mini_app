@@ -24,7 +24,7 @@ const router = createRouter({
                 {
                     path: 'list',
                     name: 'lkList',
-                    component: () => import('@/components/lk/list/MiniLkList.vue'),
+                    component: () => import('@/components/lk/product/MiniLkProduct.vue'),
                 },
             ]
         },

@@ -32,7 +32,7 @@ div(
 	.flex-1.min-w-0.space-y-1
 		// Заголовок
 		a.block.text-base.font-medium.text-surface-900.truncate.cursor-pointer.transition-colors(
-			@click.prevent="$_mini_lk_listItem_openProductLink"
+			@click.prevent="$_mini_lk_product_item_item_open"
 			class="hover:text-primary hover:underline underline-offset-2"
 		) {{ product.title }}
 		// Цены
@@ -68,7 +68,7 @@ div(
 			rounded
 			severity="danger"
 			aria-label="Delete"
-			@click="$emit('delete', product.id)"
+			@click="$_mini_lk_product_item_confirmDelete(product.id)"
 			class="!w-8 !h-8 !p-0 hover:bg-red-50 dark_hover_bg-red-900/20"
 		)
 </template>
@@ -77,6 +77,8 @@ div(
 	import { Checkbox, Button, Image } from 'primevue';
 	import { TrendingUp, TrendingDown, ImageOff } from 'lucide-vue-next';
 	import {computed} from "vue";
+	import {useConfirm} from "primevue/useconfirm";
+	import {useToast} from "primevue/usetoast";
 
 	const props = defineProps({
 		product: {
@@ -95,10 +97,8 @@ div(
 
 	const emit = defineEmits(['update:selected', 'delete']);
 
-	// Функция для открытия ссылки
-	function $_mini_lk_listItem_openProductLink() {
-		console.log('Opening product link:', props.product.title);
-	}
+	const confirm = useConfirm();
+	const toast = useToast();
 
 	const copyArticleNumber = (articleNumber) => {
 		navigator.clipboard.writeText(articleNumber)
@@ -109,7 +109,19 @@ div(
 		get: () => props.selected,
 		set: (val) => emit('update:selected', props.product.id) // Или передаем val, зависит от логики родителя
 	});
-
-	// Форматирование цены
 	const formatPrice = (price) => `$${price.toFixed(2)}`;
+
+	function $_mini_lk_product_item_confirmDelete(id) {
+		confirm.require({
+			message: 'Вы уверены, что хотите удалить этот товар?',
+			header: 'Подтверждение',
+			icon: 'pi pi-exclamation-triangle',
+			rejectProps: {label: 'Отмена',severity: 'secondary',outlined: true},
+			acceptProps: {label: 'Удалить',severity: 'danger'},
+			accept: () => { emit('delete', id) }
+		});
+	}
+	function $_mini_lk_product_item_item_open() {
+		console.log('Opening product link:', props.product.title);
+	}
 </script>

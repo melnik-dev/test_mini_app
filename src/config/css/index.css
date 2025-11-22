@@ -51,3 +51,24 @@ body {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--tg-theme-link-color);
 }
+
+/* Исправление для темной темы */
+html.dark .p-toast-message {
+    background-color: var(--tg-theme-secondary-bg-color) !important;
+    border: 1px solid var(--tg-theme-hint-color) !important;
+    color: var(--tg-theme-text-color) !important;
+}
+
+/* Цвет иконок и заголовков внутри Toast */
+html.dark .p-toast-message-content .p-toast-summary,
+html.dark .p-toast-message-content .p-toast-detail {
+    color: var(--tg-theme-text-color) !important;
+}
+
+/*
+   Опционально: если хотите, чтобы SUCCESS был с зеленым акцентом,
+   но фон оставался темным (стильно и читаемо)
+*/
+html.dark .p-toast-message-success .p-toast-message-icon {
+    color: #22c55e !important; /* Ярко-зеленая иконка */
+}
