@@ -22,7 +22,7 @@
 		//- Пустое состояние
 		MiniUiNotfoundList(v-else text="Список отслеживания пуст. Добавьте первый товар!" key="empty")
 			//- Кнопка добавления для пустого экрана
-			Button.mt-6(label="Добавить товар" icon="pi pi-plus" rounded @click="")
+			Button.mt-6(label="Добавить товар" icon="pi pi-plus" rounded @click="$router.push('/lk/add')")
 //- Появляется только если выбраны элементы
 Transition(name="slide-up")
 	MiniUiFloatingActionBar(v-if="selectedItems.size > 0" :count="selectedItems.size"

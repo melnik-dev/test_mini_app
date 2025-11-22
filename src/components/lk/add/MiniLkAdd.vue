@@ -3,7 +3,7 @@
 .flex.flex-col.gap-1
 	//- Заголовок секции
 	h3.mb-2.text-sm.font-medium.px-2.mt-4(class="text-[var(--tg-theme-link-color)]") Выберите маркетплейс
-	.flex.flex-col.gap-4.p-4
+	.flex.flex-col.gap-4.px-4.py-3
 		//- Блок выбора маркетплейса (Радиокнопки в строчку)
 		.flex.items-center.gap-6
 			//- Опция 1: WB
@@ -44,7 +44,7 @@
 		MiniUiToggleLabel(v-model="form.priceDrop" label="При снижении цены")
 		//- Пункт 2
 		.flex.items-center.justify-between.py-3.border-b.px-4(class="border-[var(--tg-theme-hint-color)]/20")
-			span(class="text-[var(--tg-theme-text-color)]") Если цена снизится до
+			span(class="text-[var(--tg-theme-text-color)] flex-1 mr-2 truncate") Если цена снизится до
 			.flex.flex-col.items-end.gap-1
 				//- Инпут цены
 				//- !bg-transparent и классы Tailwind нужны чтобы перебить дефолтные стили и сделать "как на картинке"
@@ -55,7 +55,8 @@
 					locale="ru-RU"
 					placeholder="1 000 ₽"
 					:disabled="!isPremium"
-					:pt="{ input: { class: '!bg-[var(--tg-theme-secondary-bg-color)] !border-none !text-right !rounded-xl !py-2 disabled:!opacity-70 disabled:!text-[var(--tg-theme-hint-color)]' } }"
+					class="!w-28"
+					inputClass="w-full !bg-[var(--tg-theme-secondary-bg-color)] !border-none !text-right !rounded-xl !py-2 disabled:!opacity-20 disabled:!text-[var(--tg-theme-hint-color)]"
 				)
 				//- Подпись с замком (Premium)
 				div(v-if="!isPremium" class="flex items-center gap-1 opacity-60")
@@ -71,10 +72,9 @@
 		//- Пункт 6
 		MiniUiToggleLabel(v-model="form.lowStock" label="Осталось меньше 10 единиц")
 	//- Кнопка внизу (отступ mt-6)
-	Button.mt-6.w-full.px-2(
+	Button.my-6.mx-4(
 		label="Начать следить"
 		rounded
-		size="large"
 		@click="handleSave"
 	)
 </template>
