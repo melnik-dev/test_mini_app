@@ -25,6 +25,16 @@ const router = createRouter({
                     name: 'lkList',
                     component: () => import('@/components/lk/product/MiniLkProduct.vue'),
                 },
+                {
+                    path: 'add',
+                    name: 'lkAdd',
+                    component: () => import('@/components/lk/add/MiniLkAdd.vue'),
+                },
+                {
+                    path: 'profile',
+                    name: 'lkProfile',
+                    component: () => import('@/components/lk/profile/MiniLkProfile.vue'),
+                },
             ]
         },
         {

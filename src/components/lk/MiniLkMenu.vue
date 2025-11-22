@@ -1,9 +1,9 @@
 <template lang="pug">
 nav.border-t.border-surface-200.bg-surface-0
-	.flex.justify-around.items-center.h-16.max-w-screen-md.mx-auto.px-2
-		button.flex.flex-col.items-center.justify-center.w-full.h-full.space-y-1.transition-transform.active_scale-95.cursor-pointer(
-			v-for="item in menuItems" :key="item.key" @click="activeMenu = item.key"
-			:class="['hover:opacity-80', activeMenu === item.key ? 'bg-surface-100 shadow-inner' : '']"
+	.flex.justify-around.items-center.h-16.max-w-screen-md.mx-auto.pb-2
+		router-link.flex.flex-col.items-center.justify-center.w-full.h-full.space-y-1.transition-transform.active_scale-95.cursor-pointer(
+			v-for="item in menuItems" :key="item.path" :to="`/lk/${item.path}`"
+			:class="['hover:opacity-60']"
 		)
 			span.text-xl.pi(
 				:class="[item.icon, activeMenu === item.key ? 'text-primary' : 'text-surface-500']"
@@ -18,8 +18,15 @@ nav.border-t.border-surface-200.bg-surface-0
 
 	const activeMenu = ref('list');
 	const menuItems = [
-		{key: 'list',label: 'Список',icon: 'pi pi-list',},
-		{key: 'add',label: 'Добавить',icon: 'pi pi-plus',},
-		{key: 'profile',label: 'Профиль',icon: 'pi pi-user',},
+		{path: 'list',label: 'Список',icon: 'pi pi-list',},
+		{path: 'add',label: 'Добавить',icon: 'pi pi-plus',},
+		{path: 'profile',label: 'Профиль',icon: 'pi pi-user',},
 	];
 </script>
+
+<style scoped>
+.router-link-active {
+	/* 'bg-surface-100 shadow-inner' */
+	opacity: 0.5;
+}
+</style>
