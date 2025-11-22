@@ -7,7 +7,7 @@
 main.flex.flex-col.min-h-screen.m-0.bg-surface-0.text-surface-900
 	//- Toast notifications глобально
 	//- ConfirmDialog глобально
-	Toast
+	Toast(position="top-center")
 	ConfirmDialog
 	router-view
 button(
