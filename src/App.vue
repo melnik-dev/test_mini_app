@@ -141,6 +141,7 @@ button(
 		if (window.Telegram?.WebApp?.initData) {
 			await storeAuth.login(window.Telegram.WebApp.initData)
 		}
+		await storeAuth.login(window.Telegram.WebApp.initData)
 	});
 	// router.beforeEach(async (to, from, next) => {
 	// 	const token = localStorage.getItem('userToken')
