@@ -16,6 +16,11 @@ button(
 )
 	Sun(v-if="isDark" :size="20")
 	Moon(v-else :size="20")
+button(
+	@click="storeAuth.login(window.Telegram.WebApp.initData)"
+	class="fixed top-4 left-4 z-50 p-2 rounded-full shadow-lg border transition-colors cursor-pointer bg-surface-0 border-surface-200 text-surface-600 hover:bg-surface-100 hover:text-primary"
+)
+	Sun( :size="20")
 </template>
 
 <script setup>
@@ -137,11 +142,10 @@ button(
 
 		// Слушатель изменений темы из самого Telegram
 		window.Telegram?.WebApp?.onEvent('themeChanged', initTheme);
-
 		if (window.Telegram?.WebApp?.initData) {
 			await storeAuth.login(window.Telegram.WebApp.initData)
 		}
-		await storeAuth.login(window.Telegram.WebApp.initData)
+
 	});
 	// router.beforeEach(async (to, from, next) => {
 	// 	const token = localStorage.getItem('userToken')
