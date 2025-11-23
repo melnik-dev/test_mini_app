@@ -43,6 +43,9 @@
 			li.flex.items-start.gap-3
 				i.pi.pi-exclamation-circle(class="mt-1 text-red-500")
 				span(class="text-sm text-[var(--tg-theme-text-color)]") Предупреждение, если товара осталось мало
+			li.flex.items-start.gap-3
+				i.pi.pi-exclamation-circle(class="mt-1 text-red-500")
+				span(class="text-sm text-[var(--tg-theme-text-color)]") {{storeAuth.getUser}}
 
 	//- Футер (версия)
 	.mt-auto.pb-4
@@ -51,7 +54,9 @@
 
 <script setup>
 	import { ref, onMounted } from 'vue';
+	import {useAuth} from "@/config/stores/auth.js";
 
+	const storeAuth = useAuth();
 	// Данные пользователя
 	const user = ref(null);
 

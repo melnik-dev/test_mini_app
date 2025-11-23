@@ -9,21 +9,26 @@ export const useAuth = defineStore('auth', () => {
 
     async function setAuth(updateToken) {
         token.value = updateToken
-        localStorage.setItem('userToken',updateToken)
         await setUser()
     }
     async function setUser() {
         const res = await request('GET', 'user')
         if(res && res.err===200) {
             user.value = res.user
-            localStorage.setItem('userData', JSON.stringify(res.user))
+        }
+    }
+    async function login(user){
+        user.value = user
+        const res = await request('POST', 'auth/login', {
+            user: user
+        })
+        if(res && res.err===200) {
+            user.value = user
         }
     }
     async function logout(){
         token.value = ''
         user.value = {}
-        localStorage.removeItem('userToken')
-        localStorage.removeItem('userData')
     }
     const getToken = computed(() => {
         return token.value
@@ -34,5 +39,5 @@ export const useAuth = defineStore('auth', () => {
     const getUserRole = computed(() => {
         return user.value.role
     })
-    return { setAuth, setUser, logout, getUser, getToken, getUserRole }
+    return { setAuth, setUser, logout, getUser, getToken, getUserRole, login }
 })

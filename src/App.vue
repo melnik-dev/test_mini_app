@@ -128,7 +128,7 @@ button(
 		}
 	};
 
-	onMounted(() => {
+	onMounted(async () => {
 		// Инициализация
 		window.Telegram?.WebApp?.ready();
 		window.Telegram?.WebApp?.expand();
@@ -137,6 +137,10 @@ button(
 
 		// Слушатель изменений темы из самого Telegram
 		window.Telegram?.WebApp?.onEvent('themeChanged', initTheme);
+
+		if (window.Telegram?.WebApp?.initData) {
+			await storeAuth.login(window.Telegram.WebApp.initData)
+		}
 	});
 	// router.beforeEach(async (to, from, next) => {
 	// 	const token = localStorage.getItem('userToken')
